@@ -1,0 +1,142 @@
+/*NAVIGATION BAR STYLING*/
+/*This class is used exclusively with the banner at the top of the page*/
+
+.fixed-banner {
+  position: fixed;
+}
+
+ul.my-topbanner {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: darkblue;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-banneritem {
+  float: left;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-banneritem a, .my-dropbtn { 
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+
+.my-banneritem a:hover, .my-dropdown:hover .my-dropbtn { 
+  background-color: midnightblue;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+li.my-dropdown { 
+  display: inline-block;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-dropdown-content { 
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-dropdown-content a:hover {background-color: #f1f1f1} 
+
+/*This class is used exclusively with the banner at the top of the page*/
+.my-dropdown:hover .my-dropdown-content {
+  display: block;
+}
+
+html{ 
+    background-color: white;
+    font-family: sans-serif;
+}
+
+h1{ 
+    color:black;
+    font-family: "Lucida Console",sans-serif; 
+}
+
+h3,h4{ 
+    margin:25px;
+}
+
+p{ 
+    margin:25px;
+}
+
+footer{ 
+    color:white;
+    background-color: darkblue;
+    font-family: "Lucida Console";
+}
+
+.foot-outer {
+  font-size: 150%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.foot-inner {
+  font-size: 125%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/*These next stylings are for the form fieldsets in the login page*/
+.forms{ 
+    display: inline-block;
+    min-height:400x;
+    width:400px;
+    padding:25px;
+}
+
+/*this ensures that the floating divs in the next two blocks are not overlapping with the rest of the page*/
+.clearfix::after { 
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

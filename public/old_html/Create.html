@@ -1,0 +1,46 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content= "width=device-width, initial-scale = 1"><!--what exactly doe this do?-->
+    <title>Login/Sign Up</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+</head>
+
+<body>
+    <main>
+        <a href="/"><h1 style="text-align: center; font-size: 500%;">Tutors to Go</h1></a> <!--the percentage is in respect to body text-->
+        <div class="container">
+            <br>
+            <div class ="jumbotron" id="Create">
+                <form method="POST" action="/StudentCreate">
+                    <h1 class="display-4">Create an Account</h1>
+                    <br>
+                    <input name="name" class="form-control" placeholder="Name" required>
+                    <br>
+                    <input name="email" class="form-control" placeholder="Email" type="email" required>
+                    <br>
+                    <input name="password" class="form-control" placeholder="Password" required>
+                    <br>
+                    <input name="phoneNumber" class="form-control" placeholder="Phone Number (so we can quickly update you on the status of your session)" required>
+                    <br>
+                    <input type="submit" class="btn btn-success" style="background-color: darkblue" value="Create">
+                </form>
+            </div>
+            <br>
+        <div style="text-align: center" class='display-6'>Already have an account? Login <a href="Login.html" title="Login">here</a></div>
+    </div>
+    </main>
+
+    <script>
+    </script>
+</body>
