@@ -153,8 +153,13 @@ module.exports = () => {
     */
   });
   
-  router.post('/TutorSelect', (req, res) => {
-    req.session.tutor = req.body.tutor;
+  router.post('/TutorSelect', async (req, res) => {
+    console.log(req.body.tutor);
+
+    await TutorModel.findByIdAndUpdate(req.body.tutor, { currentlyWorking: true }, (tutor) => {
+      req.session.tutor = tutor;
+    });
+
     res.redirect('/schedule/payment')
     /* //Worry about updating the tutors later. For now, just add the tutor email to the req.session.tutor
     TutorModel.findByIdAndUpdate({ id: req.body._id }, { currentlyWorking: true }, (tutor) => {
