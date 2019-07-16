@@ -17,7 +17,7 @@ module.exports = (config) => {
 
     const limiter = new RateLimit({
         windowMs: 15*60*1000,
-        max: 10,
+        max: 150,
         delayMs: 0
     });
 

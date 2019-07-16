@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
 
     <title>Tutors to Go</title>
   </head>
@@ -49,15 +49,87 @@
         </nav>
   </header>
   <body>
+    <!--
+    <br>
+    <div class="container rounded">
+      <div class="row">
+          <div class="col-sm-2 rounded-left" style="background-color: lightsteelblue">
+            <br>
+            <img src="https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg" alt="Student image" class="rounded-circle" width="100" height="100">
+            <br><br>
+          </div>
+          <div class="col-sm-4 rounded-right" style="background-color: lightsteelblue">
+            <h2>Student Name</h2>
+              <h3>Courses: </h3>
+              <h3>Rating: </h3>
+          </div>
+      </div>
+    </div>
+    <br>
 
+    <div class="container">
+      <div class="jumbotron" style="background-color: lightsteelblue;">
+        <div class="row">
+          <div class="col-sm-2">
+            <img src="https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg" alt="Student image" class="rounded-circle" width="100" height="100">
+          </div>
+          <div class="col-sm-4">
+            <h2>Student Name</h2>
+            <h3>Courses:</h3>
+            <h3>Rating:</h3>
+            <button class="btn btn-secondary">Select</button>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    <div id="temp">
+      <form id="form">
+        <input id="course" name="course">
+        <input id="location" name="location">
+        <input id="time" name="time">
+      
+        <input type="submit">
+      </form>
+    </div>
 
+    <br>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.4.1.js""></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
-    
+    $(
+      $('#form').submit((event) => {
+        event.preventDefault();
+        console.log("default prevented");
+        console.log(event);
+        const request = {
+          course: $('#course').val(),
+          location: $('#location').val(),
+          time: $('#time').val()
+        }
+
+        $.post('http://localhost:3000/schedule', request, updatePage)
+      })
+    )
+
+    updatePage = (tutors) => {
+      console.log(tutors);
+
+      $('#temp').empty();
+
+      $('#temp').append(`<form id="updatedForm" action="/TutorSelect" method="POST">`)
+      tutors.forEach((tutor) => {
+        console.log("adding a tutor")
+        $('#updatedForm').append(`
+          <input type="radio" name="tutors" value=${tutor._id}>${tutor.name}<br>
+        `)
+      })
+
+      $('#updatedForm').append(`<input type="submit">`)
+    }
+
     </script>
     <footer style="color: white; background-color: darkblue">
         <div class="container">

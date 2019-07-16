@@ -1,12 +1,11 @@
 /*--------Route key (for later)---------------
 Use Ctrl + F to find and replace these;
-/About                ==
-/StudentLogin         == /Login.html
-/StudentCreate        == /Create.html
-/Schedule             == /Schedule.html
-  /Schedule/Payment   ==
-  /Schedule/Confirm   ==
-/StudentLogout        == /StudentLogout
+/login                == /login.html
+/create               == /create.html
+/schedule             == /schedule.html
+/schedule/payment     ==
+/schedule/confirm     ==
+/logout               == /logout
 /StudentUpdate        ==
 --------------------------------------------*/
 
@@ -105,7 +104,7 @@ module.exports = () => {
 
   //-----------------------------------------------------------------------------------------
   
-  router.post('/StudentLogin', passport.authenticate('local', {
+  router.post('/login', passport.authenticate('local', {
     successRedirect: '/schedule',
     failureRedirect: '/login?error=true',
   }));
@@ -121,7 +120,7 @@ module.exports = () => {
 
       const savedUser = await user.save();
 
-      if (savedUser) return res.redirect('/StudentLogin'); //determine if creating an account serializes a session, if so send them straight to schedule
+      if (savedUser) return res.redirect('/login'); //determine if creating an account serializes a session, if so send them straight to schedule
       return next(new Error('Failed to save user for unknown reasons'));
     } catch (err) {
       console.log(err.code); //log.error (later problem)
@@ -131,9 +130,7 @@ module.exports = () => {
   }); 
 
   router.post('/schedule', async (req, res, next) => {
-    const course = req.body.course;
-    const location = req.body.location;
-    const time = req.body.time;
+    const { course, location, time } = req.body;
 
     console.log(course);
 
@@ -141,7 +138,7 @@ module.exports = () => {
     req.session.location =  location;
     req.session.time = time;
 
-    const tutors = await TutorModel.find({courses: course}).sort({ averageRating: -1});
+    const tutors = await TutorModel.find({courses: course, currentlyWorking: false}).sort({ averageRating: -1});
     console.log(tutors);
     res.json(tutors);
 
@@ -271,7 +268,7 @@ module.exports = () => {
     return res.end(tn, 'binary');
   });
 
-  router.get('/StudentLogin', redirectIfLoggedIn, (req, res) => {
+  router.get('/login', redirectIfLoggedIn, (req, res) => {
     res.writeHead(200, {"Content-Type": "text/html"});
     res.end(`
       <!DOCTYPE html>
@@ -280,7 +277,7 @@ module.exports = () => {
       <title>THIS IS STUDENT LOGIN</title>
       </head>
       <body>
-      <form action="/StudentLogin" method="post">
+      <form action="/login" method="post">
     <div>
         <label>Email:</label>
         <input type="text" name="email"/>
@@ -297,7 +294,7 @@ module.exports = () => {
       </html>
     `)
   }); //I am 95% certain that this works correctly
-  //router.get('/StudentLogin', redirectIfLoggedIn, (req, res) => res.render('users/login', { error: req.query.error }));
+  //router.get('/login', redirectIfLoggedIn, (req, res) => res.render('users/login', { error: req.query.error }));
 
 
     router.get('/TutorLogin', redirectIfLoggedIn);
