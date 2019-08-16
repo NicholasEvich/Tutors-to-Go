@@ -49,7 +49,7 @@ app.set('port', port);
 
 const server = http.createServer(app);
 const io = require('../server/services/websocket/index')(http); //this must be after the server is instantiated
-log.info(io)
+//log.info(io)
 /*
 if (cluster.isMaster) {
   log.info(`Master ${process.pid} is running`);
@@ -64,7 +64,7 @@ if (cluster.isMaster) {
   db.connect(config.database.dsn)
     .then(() => {
       log.info('Connected to MongoDB');
-      server.listen(port);
+      server.listen(port); //HERE
     })
     .catch((err) => {
       log.fatal(err);

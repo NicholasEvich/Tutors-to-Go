@@ -15,12 +15,13 @@ const passport = require('passport');
 const StudentModel = require('../models/StudentModel');
 const TutorModel = require('../models/TutorModel');
 const path = require('path');
+var braintree = require('braintree');
 
 const router = express.Router();
 
 //doesnt this need to be in module.exports? it doesnt matter, bec module.exports only returns the router
 function redirectIfLoggedIn (req, res, next) {
-  console.log(req.user)
+  // console.log(req.user)
   if (req.user) { //was if (req.user)
     console.log('redirecting, as the user is already logged in');
     return res.redirect('/schedule');
@@ -102,6 +103,9 @@ module.exports = () => {
     return res.redirect('/');
   });
 
+  router.get('/payment', redirectIfNotLoggedIn, (req, res) => {
+    res.sendFile(path.join(root, 'payment.html'));
+  });
   //-----------------------------------------------------------------------------------------
   
   router.post('/login', passport.authenticate('local', {
@@ -160,7 +164,7 @@ module.exports = () => {
       req.session.tutor = tutor;
     });
 
-    res.redirect('/schedule/payment')
+    res.redirect('/payment')
     /* //Worry about updating the tutors later. For now, just add the tutor email to the req.session.tutor
     TutorModel.findByIdAndUpdate({ id: req.body._id }, { currentlyWorking: true }, (tutor) => {
       console.log(req.body);
@@ -198,6 +202,52 @@ module.exports = () => {
       //return res.send('Error: 11000: Cannot save a duplicate user')
     }
   });
+
+  //---------------Payments----------------------------------
+
+  const gateway = braintree.connect({
+    environment: braintree.Environment.Sandbox,
+    // Use your own credentials from the sandbox Control Panel here
+    merchantId: '5shrs55bb4d9ptsp',
+    publicKey: '4rt3q2q2mzz7bwjf',
+    privateKey: 'f0a08da580d6ea1f69c0288870949a70'
+  });
+
+  gateway.clientToken.generate({
+    customerId: '1'
+  }, (err, response) => {
+    const clientToken = response.clientToken;
+  });
+
+  //The client will make a request and use of this route, not the server. See the client documentation
+  router.get("/client_token", (req, res) => {
+    gateway.clientToken.generate({}, (err, response) => {
+      res.send(response.clientToken);
+    });
+  });
+
+  router.post('/checkout', (req, res, next) => {
+  
+    // Use the payment method nonce here
+    const nonceFromTheClient = req.body.paymentMethodNonce;
+    // Create a new transaction for $10
+    const newTransaction = gateway.transaction.sale({
+      amount: '10.00',
+      paymentMethodNonce: nonceFromTheClient,
+      options: {
+        // This option requests the funds from the transaction
+        // once it has been authorized successfully
+        submitForSettlement: true
+      }
+    }, (error, result) => {
+        if (result) {
+          res.send(result);
+        } else {
+          res.status(500).send(error);
+        }
+    });
+  });
+  //---------------------------------------------------------
 
   return router;
 };
